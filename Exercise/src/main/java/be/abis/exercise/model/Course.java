@@ -19,6 +19,7 @@ public class Course {
 		this.numberOfDays = numberOfDays;
 		this.pricePerDay = pricePerDay;
 	}
+
 	public String getCourseId() {
 		return courseId;
 	}

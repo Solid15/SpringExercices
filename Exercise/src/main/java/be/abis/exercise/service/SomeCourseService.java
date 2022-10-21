@@ -1,33 +1,34 @@
 package be.abis.exercise.service;
 
 import be.abis.exercise.model.Course;
-import be.abis.exercise.repository.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@Qualifier("AbisService")           // @Primary is a possible alternative
-public class AbisCourseService implements CourseService {
-
-    @Autowired
-    CourseRepository courseRepository;
+@Qualifier("SomeService")
+public class SomeCourseService implements CourseService {
 
     @Override
     public List<Course> findAllCourses() {
-        return courseRepository.findAllCourses();
+        return null;
     }
 
     @Override
     public Course findCourse(int id) {
-        return courseRepository.findCourse(id);
+        Course course = new Course();
+        if (id == 7900) {
+            course.setCourseId("7900");
+            course.setLongTitle("Test Course");
+            course.setShortTitle("Test Course");
+            return course;
+        } else return null;
     }
 
     @Override
     public Course findCourse(String shortTitle) {
-        return courseRepository.findCourse(shortTitle);
+        return null;
     }
 
     @Override

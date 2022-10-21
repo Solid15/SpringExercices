@@ -3,21 +3,35 @@ package be.abis.exercise.repository;
 import be.abis.exercise.model.Address;
 import be.abis.exercise.model.Company;
 import be.abis.exercise.model.Person;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnResource;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 @Repository
+@Profile("prod")
+@ConditionalOnResource(resources = "file:${personfile.path}")
 public class FilePersonRepository implements PersonRepository {
 
 	private ArrayList<Person> allPersons;
-	private String fileLoc = "/temp/javacourses/personsSpring.csv";
+	@Value("${personfile.path}")
+	private String fileLoc = "";
 
 	public FilePersonRepository() {
-		allPersons = new ArrayList<Person>();
+		allPersons = new ArrayList<>();
+	//	this.readFile();
+	}
+
+	@PostConstruct
+	public void init() {
 		this.readFile();
 	}
 
@@ -84,14 +98,20 @@ public class FilePersonRepository implements PersonRepository {
 
 		this.readFile();
 		// System.out.println("persons in PersonList" + allPersons);
-		Iterator<Person> iter = allPersons.iterator();
 
-		while (iter.hasNext()) {
+		for (Person pers : allPersons) {
+			if (pers.getEmailAddress().equalsIgnoreCase(emailAddress) && pers.getPassword().equals(passWord)) {
+				return pers;
+			}
+		}
+
+	/*	while (iter.hasNext()) {
 			Person pers = iter.next();
 			if (pers.getEmailAddress().equalsIgnoreCase(emailAddress) && pers.getPassword().equals(passWord)) {
 				return pers;
 			}
 		}
+	*/
 		return null;
 	}
 	

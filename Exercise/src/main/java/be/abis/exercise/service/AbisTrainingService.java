@@ -8,12 +8,21 @@ import org.springframework.beans.factory.annotation.Value;
 import java.time.LocalDate;
 import java.util.List;
 
-public class AbisTrainerService implements TrainingService {
+public class AbisTrainingService implements TrainingService {
 
     @Value("Welcome student!")
     private String welcomeMessage;
+    private String helloMessage;
     private PersonService personService;
     private CourseService courseService;
+
+    public AbisTrainingService() {
+    }
+
+    public AbisTrainingService(PersonService personService, CourseService courseService) {
+        this.personService = personService;
+        this.courseService = courseService;
+    }
 
     @Override
     public String getWelcomeMessage() {
