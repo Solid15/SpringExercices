@@ -6,7 +6,10 @@ import be.abis.exercise.model.Person;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class AbisTrainingService implements TrainingService {
 
@@ -36,8 +39,10 @@ public class AbisTrainingService implements TrainingService {
 
     @Override
     public void enrollForSession(Person person, Course course, LocalDate date) throws EnrollException {
-
-    }
+        if (date.isBefore(LocalDate.now())) throw new EnrollException("No inscription in the past possible");
+        System.out.println(person.getFirstName() + " is now enrolled for the " + course.getShortTitle()
+                + " course on " + date);
+    }                                                   // DAYS.between(date, LocalDate.now()) < 0
 
     @Override
     public void setCourseService(CourseService courseService) {
