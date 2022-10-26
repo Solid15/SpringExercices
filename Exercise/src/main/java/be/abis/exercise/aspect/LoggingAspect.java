@@ -33,7 +33,7 @@ public class LoggingAspect {
                             // pointcut optional, but required with multiple arguments
     @AfterThrowing(pointcut = "be.abis.exercise.aspect.AOPPointCuts.executeEnroll()", throwing = "e")
     public void afterWrongDateEnrollment(EnrollException e) {
-        exceptionLogger.error("Wrong enrollment date chosen: " +e.getMessage());
+        exceptionLogger.error("Wrong enrollment date chosen: " + e.getMessage());
     }
 
                             /// No Spring MVC, we'll use ANGULAR
