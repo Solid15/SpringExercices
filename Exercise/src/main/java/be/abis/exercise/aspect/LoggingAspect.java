@@ -22,7 +22,7 @@ public class LoggingAspect {
     // pointcut = "PointCuts.executeEnroll()" not required, AOP path may be directly written in ()
    @Before("execution(public * be.abis.exercise.service.*.enrollForSession(..))")       // public optional
     public void beforeEnrolling() {
-        exceptionLogger.info("Student enrollment method called");
+        infoLogger.info("Student enrollment method called");
     }
 
     @AfterReturning(pointcut = "be.abis.exercise.aspect.AOPPointCuts.executeEnroll()")
